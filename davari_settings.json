@@ -1,0 +1,20 @@
+{
+  "timeout_sec": 30,
+  "dark_theme": true,
+  "lang": "fa",
+  "vip_license": "MDPRO-20270101-90D-9BF464",
+  "vip_expiry_ticks": 639344447990000000,
+  "max_utc_ticks": 639266687990000000,
+  "wallet_trc20": "TZ6ZXsBGTEAfWkw4KGNDPcnQBH8eSpEX6A",
+  "wallet_bep20": "0xC69FaF72A1c80a6c054Ed2E129d8947291215eC9",
+  "wallet_ton": "UQCUE7F9Q58HC4yH9FUS12p2FedHtMr-32gZ8ZkOrIyfUEV7",
+  "rial_card": "6037-9975-XXXX-XXXX (به نام محمد دواری)",
+  "rial_url": "https://zarinp.al/mdavarivpn",
+  "telegram_id": "MDavari_Support",
+  "bot_token": "",
+  "admin_chat_id": "",
+  "cloud_config_url": "https://mdavari-vpn-cloud.mmmd1366.workers.dev/config",
+  "icons_csv": "bolt,star,diamond,crown",
+  "badges_csv": "اقتصادی|پرطرفدار|پیشنهاد ویژه|یکساله طلایی",
+  "prices_csv": "1,2,3,5"
+}

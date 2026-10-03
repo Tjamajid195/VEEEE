@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>MDavari VPN PRO — پنل ادمین و صدور لایسنس (موبایل و دسکتاپ)</title>
+<style>
+  :root {
+    --bg: #070a12;
+    --card: #0f172a;
+    --sub: #1e293b;
+    --gold: #fbbf24;
+    --gold-dark: #d97706;
+    --emerald: #10b981;
+    --emerald-bg: #06281e;
+    --sky: #0284c7;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    margin: 0; padding: 16px;
+    background: radial-gradient(circle at top, #131c31 0%, var(--bg) 75%);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; justify-content: center;
+  }
+  .container {
+    width: 100%; max-width: 520px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  }
+  .header h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.15rem;
+    color: var(--gold);
+  }
+  .header p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
+  .label {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: bold;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  textarea, input, select {
+    width: 100%;
+    background: #080d18;
+    color: var(--text);
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus, input:focus, select:focus {
+    border-color: var(--gold);
+  }
+  .row {
+    display: flex; gap: 10px; align-items: center; margin-top: 12px;
+  }
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .plan-btn {
+    background: var(--sub);
+    color: var(--text);
+    border: 1px solid #475569;
+    border-radius: 10px;
+    padding: 10px 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .plan-btn.active {
+    background: var(--gold-dark);
+    color: #fff;
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+  }
+  .key-box {
+    background: var(--emerald-bg);
+    border: 2px solid var(--emerald);
+    color: #34d399;
+    font-family: Consolas, monospace;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    letter-spacing: 1.5px;
+    margin: 10px 0;
+    direction: ltr;
+    user-select: all;
+  }
+  .btn {
+    width: 100%;
+    border: none;
+    border-radius: 11px;
+    padding: 13px;
+    font-size: 0.92rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    margin-top: 8px;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-telegram { background: linear-gradient(135deg, #0284c7, #0369a1); }
+  .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .toast {
+    display: none;
+    background: #065f46;
+    color: #a7f3d0;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>👑 پنل مدیریت و صدور لایسنس MDavari VPN PRO</h1>
+    <p>مخصوص مدیر و فروشنده (قابل استفاده در گوشی موبایل و کامپیوتر به صورت آفلاین)</p>
+  </div>
+
+  <div class="card">
+    <label class="label">۱. پیام سفارش مشتری در تلگرام را اینجا Paste کنید (تشخیص خودکار):</label>
+    <textarea id="orderPaste" rows="3" placeholder="پیام ارسالی مشتری از تلگرام را اینجا جای‌گذاری کنید تا کد دستگاه (HWID) و پلن به طور خودکار استخراج شود..."></textarea>
+    <button class="btn btn-telegram" onclick="pasteFromClipboard()">📋 جای‌گذاری خودکار پیام مشتری از حافظه گوشی/سیستم</button>
+
+    <div style="margin-top: 14px;">
+      <label class="label">🖥️ کد یکتای دستگاه مشتری (HWID):</label>
+      <input type="text" id="hwidInput" value="MD-7F3A-91C4-E8B2" style="direction:ltr; text-align:center; font-family:Consolas,monospace; font-weight:bold; font-size:1.05rem; color:#fde047;" oninput="updateKey()" />
+    </div>
+
+    <div style="margin-top: 14px;">
+      <label class="label">⏱ انتخاب پلن اشتراک مشتری:</label>
+      <div class="plan-grid">
+        <div class="plan-btn" id="p30" onclick="selectDays(30)">۱ ماهه<br><small>30 روز</small></div>
+        <div class="plan-btn active" id="p90" onclick="selectDays(90)">⭐ ۳ ماهه<br><small>90 روز</small></div>
+        <div class="plan-btn" id="p180" onclick="selectDays(180)">۶ ماهه<br><small>180 روز</small></div>
+        <div class="plan-btn" id="p365" onclick="selectDays(365)">👑 ۱ ساله<br><small>365 روز</small></div>
+      </div>
+      <div class="row">
+        <span style="font-size:0.84rem; color:var(--muted); white-space:nowrap;">تعداد روز دلخواه:</span>
+        <input type="number" id="daysInput" value="90" min="1" max="3650" style="direction:ltr; text-align:center; font-weight:bold;" oninput="updateKey()" />
+      </div>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <label class="label" style="color:#34d399;">🔑 کد لایسنس اختصاصی صادرشده برای این دستگاه:</label>
+      <div class="key-box" id="generatedKey">MDPRO-90D-XXXX-XXXX</div>
+      <button class="btn btn-gold" onclick="copyKeyOnly()">📋 کپی فقط کد لایسنس</button>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <label class="label">💬 پیام آماده تحویل به مشتری در تلگرام:</label>
+      <textarea id="replyBox" rows="5" readonly style="font-size:0.84rem; line-height:1.55;"></textarea>
+      <button class="btn btn-emerald" onclick="copyFullReply()">✈️ کپی پیام کامل تحویل اشتراک (برای ارسال در تلگرام)</button>
+      <div class="toast" id="toastMsg">✅ با موفقیت در حافظه کپی شد!</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Pure-JS SHA-256 & HMAC-SHA256 (100% offline, works on all mobile & desktop browsers)
+function sha256Bytes(asciiBytes) {
+  const K = [
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+  ];
+  function rotr(n, x) { return (x >>> n) | (x << (32 - n)); }
+  const l = asciiBytes.length;
+  const bitLen = l * 8;
+  const padLen = ((l + 9 + 63) >> 6) << 6;
+  const m = new Uint8Array(padLen);
+  m.set(asciiBytes);
+  m[l] = 0x80;
+  const dv = new DataView(m.buffer);
+  dv.setUint32(padLen - 4, bitLen, false);
+
+  let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const W = new Uint32Array(64);
+
+  for (let i = 0; i < padLen; i += 64) {
+    for (let t = 0; t < 16; t++) W[t] = dv.getUint32(i + t * 4, false);
+    for (let t = 16; t < 64; t++) {
+      const s0 = rotr(7, W[t-15]) ^ rotr(18, W[t-15]) ^ (W[t-15] >>> 3);
+      const s1 = rotr(17, W[t-2]) ^ rotr(19, W[t-2]) ^ (W[t-2] >>> 10);
+      W[t] = (W[t-16] + s0 + W[t-7] + s1) >>> 0;
+    }
+    let [a,b,c,d,e,f,g,h] = H;
+    for (let t = 0; t < 64; t++) {
+      const S1 = rotr(6, e) ^ rotr(11, e) ^ rotr(25, e);
+      const ch = (e & f) ^ (~e & g);
+      const temp1 = (h + S1 + ch + K[t] + W[t]) >>> 0;
+      const S0 = rotr(2, a) ^ rotr(13, a) ^ rotr(22, a);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const temp2 = (S0 + maj) >>> 0;
+      h = g; g = f; f = e; e = (d + temp1) >>> 0;
+      d = c; c = b; b = a; a = (temp1 + temp2) >>> 0;
+    }
+    H[0]=(H[0]+a)>>>0; H[1]=(H[1]+b)>>>0; H[2]=(H[2]+c)>>>0; H[3]=(H[3]+d)>>>0;
+    H[4]=(H[4]+e)>>>0; H[5]=(H[5]+f)>>>0; H[6]=(H[6]+g)>>>0; H[7]=(H[7]+h)>>>0;
+  }
+  const out = new Uint8Array(32);
+  const outDv = new DataView(out.buffer);
+  for (let i = 0; i < 8; i++) outDv.setUint32(i * 4, H[i], false);
+  return out;
+}
+
+function strToUtf8Bytes(str) {
+  return new TextEncoder().encode(str);
+}
+
+function hmacSha256Hex(secretStr, msgStr) {
+  let key = strToUtf8Bytes(secretStr);
+  const msg = strToUtf8Bytes(msgStr);
+  if (key.length > 64) key = sha256Bytes(key);
+  const oKeyPad = new Uint8Array(64);
+  const iKeyPad = new Uint8Array(64);
+  for (let i = 0; i < 64; i++) {
+    const kb = i < key.length ? key[i] : 0;
+    oKeyPad[i] = kb ^ 0x5c;
+    iKeyPad[i] = kb ^ 0x36;
+  }
+  const inner = new Uint8Array(64 + msg.length);
+  inner.set(iKeyPad);
+  inner.set(msg, 64);
+  const innerHash = sha256Bytes(inner);
+
+  const outer = new Uint8Array(64 + 32);
+  outer.set(oKeyPad);
+  outer.set(innerHash, 64);
+  const digest = sha256Bytes(outer);
+  return Array.from(digest).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+const MASTER_SECRET = "MDAVARI_VIP_PRO_MASTER_SECRET_2026_GOLD";
+
+function getExpiryYmdAndDisplay(days) {
+  const exp = new Date(Date.now() + days * 86400000);
+  const y = exp.getUTCFullYear();
+  const m = String(exp.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(exp.getUTCDate()).padStart(2, '0');
+  return { ymd: `${y}${m}${d}`, display: `${y}/${m}/${d}` };
+}
+
+function generateLicenseForHwid(hwid, days) {
+  const cleanHwid = (hwid || "").trim().toUpperCase();
+  const { ymd, display } = getExpiryYmdAndDisplay(days);
+  const payload = cleanHwid + "|" + ymd + "|" + days;
+  const hex = hmacSha256Hex(MASTER_SECRET, payload);
+  return { key: `MDPRO-${ymd}-${days}D-${hex.substring(0,6)}`, displayDate: display };
+}
+
+function selectDays(d) {
+  document.getElementById('daysInput').value = d;
+  ['p30','p90','p180','p365'].forEach(id => document.getElementById(id).classList.remove('active'));
+  if (d === 30) document.getElementById('p30').classList.add('active');
+  if (d === 90) document.getElementById('p90').classList.add('active');
+  if (d === 180) document.getElementById('p180').classList.add('active');
+  if (d === 365) document.getElementById('p365').classList.add('active');
+  updateKey();
+}
+
+function parseOrderText(raw) {
+  if (!raw) return;
+  const m = raw.toUpperCase().match(/MD-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/);
+  if (m) {
+    document.getElementById('hwidInput').value = m[0];
+  }
+  if (raw.includes('365') || raw.includes('۳۶۵') || raw.includes('ساله')) selectDays(365);
+  else if (raw.includes('180') || raw.includes('۱۸۰') || raw.includes('۶ ماه')) selectDays(180);
+  else if (raw.includes('90') || raw.includes('۹۰') || raw.includes('۳ ماه')) selectDays(90);
+  else if (raw.includes('30') || raw.includes('۳۰') || raw.includes('۱ ماه')) selectDays(30);
+  else updateKey();
+}
+
+document.getElementById('orderPaste').addEventListener('input', function(e) {
+  parseOrderText(e.target.value);
+});
+
+async function pasteFromClipboard() {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (text) {
+      document.getElementById('orderPaste').value = text;
+      parseOrderText(text);
+      showToast("✅ پیام مشتری از حافظه خوانده شد و کلید ساخته شد!");
+    }
+  } catch (err) {
+    document.getElementById('orderPaste').focus();
+  }
+}
+
+function updateKey() {
+  let hwid = document.getElementById('hwidInput').value.trim().toUpperCase();
+  if (!hwid) hwid = "MD-0000-0000-0000";
+  let days = parseInt(document.getElementById('daysInput').value || "90", 10);
+  if (isNaN(days) || days < 1) days = 30;
+  const res = generateLicenseForHwid(hwid, days);
+  const key = res.key;
+  document.getElementById('generatedKey').textContent = key;
+
+  const reply =
+`✅ پرداخت شما تایید و اشتراک VIP PRO صادر گردید!
+━━━━━━━━━━━━━━━━━━━━━━━━
+🖥️ کد دستگاه شما (HWID): ${hwid}
+⏱ مدت اشتراک: ${days} روز (اعتبار تا ${res.displayDate})
+🔑 کد لایسنس اختصاصی شما:
+${key}
+━━━━━━━━━━━━━━━━━━━━━━━━
+📌 کد بالا را در بخش «💎 اشتراک VIP PRO» برنامه وارد کرده و دکمه «فعال‌سازی» را بزنید تا دکمه اتصال باز شود.`;
+  document.getElementById('replyBox').value = reply;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toastMsg');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+function copyKeyOnly() {
+  const k = document.getElementById('generatedKey').textContent;
+  navigator.clipboard.writeText(k);
+  showToast("✅ کد لایسنس کپی شد: " + k);
+}
+
+function copyFullReply() {
+  const r = document.getElementById('replyBox').value;
+  navigator.clipboard.writeText(r);
+  showToast("✅ پیام کامل تحویل اشتراک کپی شد! در تلگرام Paste کنید.");
+}
+
+updateKey();
+</script>
+</body>
+</html>
