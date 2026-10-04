@@ -55,7 +55,7 @@ export default {
       });
     }
     if (path === "/sha") {
-      return new Response("5e13e66d60ab74f0eba80dd189cc16a65d8c9879c6c2269d49cccc4c09ebf8d3\n");
+      return new Response("203cc7cefef4e76b30e2fdc57c0221d6c8ce52ab36820e4949dded942df91722\n");
     }
 
     const corsHeaders = {

@@ -6,7 +6,7 @@ const FILE_URL =
   "https://raw.githubusercontent.com/Tjamajid195/VEEEE/arena/01a101a4-veeee/MDavari_VPN_PRO_v41.exe";
 
 const EXPECTED_SHA256 =
-  "5e13e66d60ab74f0eba80dd189cc16a65d8c9879c6c2269d49cccc4c09ebf8d3";
+  "203cc7cefef4e76b30e2fdc57c0221d6c8ce52ab36820e4949dded942df91722";
 
 export default {
   async fetch(request) {
